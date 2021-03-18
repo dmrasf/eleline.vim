@@ -32,7 +32,7 @@ function! ElelineBufnrWinnr() abort
 endfunction
 
 function! ElelineTotalBuf() abort
-  return '[TOT:'.len(filter(range(1, bufnr('$')), 'buflisted(v:val)')).']'
+  return '[BUFS:'.len(filter(range(1, bufnr('$')), 'buflisted(v:val)')).']'
 endfunction
 
 function! ElelinePaste() abort
@@ -250,24 +250,24 @@ function! s:StatusLine() abort
       let l:vista = ''
   endif
   let l:prefix = l:bufnr_winnr.l:paste
-  let l:common = l:curfname.l:branch.l:status.l:error.l:warning.l:tags.l:lcn.l:coc.l:lsp.l:vista
+  let l:common = l:curfname.l:error.l:warning.l:tags.l:lcn.l:coc.l:lsp.l:vista
   if get(g:, 'eleline_slim', 0)
     return l:prefix.'%<'.l:common
   endif
   let l:tot = s:def('ElelineTotalBuf')
   let l:fsize = '%#ElelineFsize#%{ElelineFsize(@%)}%*'
   let l:m_r_f = '%#Eleline7# %m%r%y %*'
-  let l:pos = '%#Eleline8# '.(s:font?"\ue0a1":'').'%l/%L:%c%V |'
-  let l:enc = ' %{&fenc != "" ? &fenc : &enc} | %{&bomb ? ",BOM " : ""}'
+  let l:pos = '%#Eleline8# '.(s:font?"\ue0a1":'').'%l/%L:%c%V'
+  let l:enc = ' %{&fenc != "" ? &fenc : &enc} %{&bomb ? ",BOM " :""}'
   let l:ff = '%{&ff} %*'
   let l:pct = '%#Eleline9# %P %*'
-  return l:prefix.l:tot.'%<'.l:fsize.l:common
-        \ .'%='.l:m_r_f.l:pos.l:enc.l:ff.l:pct
+  return l:prefix.l:tot.'%<'.l:common
+        \ .'%='.l:m_r_f.l:pos.l:enc.l:ff
 endfunction
 
 let s:colors = {
             \   140 : '#af87d7', 149 : '#99cc66', 160 : '#d70000',
-            \   171 : '#d75fd7', 178 : '#ffbb7d', 184 : '#ffe920',
+            \   171 : '#d75f07', 178 : '#ffbb0d', 184 : '#ffe920',
             \   208 : '#ff8700', 232 : '#333300', 197 : '#cc0033',
             \   214 : '#ffff66', 124 : '#af3a03', 172 : '#b57614',
             \   32  : '#3a81c3', 89  : '#6c3163',
